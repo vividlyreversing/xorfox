@@ -81,7 +81,7 @@ int _tmain(int argc, TCHAR* argv[]) {
 
 	hFile = _tfopen(tzFileName, T("rb"));
 	if (hFile == NULL) {
-		_tperror(T("Could not open file"));
+		_tperror(T("Could not open file "));
 		return 1;
 	}
 
@@ -90,14 +90,14 @@ int _tmain(int argc, TCHAR* argv[]) {
 
 	pFile = calloc(1, cbFile);
 	if (pFile == NULL) {
-		_tperror(T("Could not allocate memory to read file"));
+		_tperror(T("Could not allocate memory to read file "));
 		fclose(hFile);
 		return 1;
 	}
 
 	fseek(hFile, 0, SEEK_SET);
 	if (fread(pFile, cbFile, 1, hFile) != 1) {
-		_tperror(T("Could not read file"));
+		_tperror(T("Could not read file "));
 		fclose(hFile);
 		return 1;
 	}
@@ -105,7 +105,7 @@ int _tmain(int argc, TCHAR* argv[]) {
 	fclose(hFile);
 
 	if (argc == 4)
-		cbPreview = atoi(argv[3]);
+		cbPreview = _ttoi(argv[3]);
 
 	attack_xor((uint8_t*)pFile, cbFile, uCrib, cbCrib, cbPreview);
 
